@@ -9,6 +9,8 @@ It includes:
 - a very thin C++ wrapper for the library, called `libevdipp`, which also includes a simple terminal-based example,
 - a simple Qt app which uses evdi to add an additional screen an show its contents in a window.
 
+![twoscreens](https://cloud.githubusercontent.com/assets/4071821/20014459/52100d3a-a2b7-11e6-8b0d-64c4e77245ea.png)
+
 ## Building
 You need cmake to build. EVDI is defined as external project which will be cloned from git as part of the build.
 
