@@ -31,7 +31,7 @@ int first_available_device()
                     }
                 } catch (bad_lexical_cast&) {
                     continue;
-                }   
+                }
             }
         }
     }
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    std::unique_ptr<Evdi> evdi;
+    std::unique_ptr<Evdi> evdi(new Evdi);
     int devnum = first_available_device();
     if (devnum < 0) {
         evdi->add();
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
         return 2;
     }
 
-    auto screen = std::make_shared<Screen>(*evdi, edid);    
+    auto screen = std::make_shared<Screen>(*evdi, edid);
 
     Driver driver;
     driver.add_screen(screen);

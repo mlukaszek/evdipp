@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    std::unique_ptr<Evdi> evdi;
+    std::unique_ptr<Evdi> evdi(new Evdi);
     int devnum = first_available_evdi();
     if (devnum < 0) {
         evdi->add();
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
         std::cerr << "No usable EVDI found" << std::endl;
         return 2;
     }
-	
+
     QApplication app(argc, argv);
     QEvdiScreen screen(*evdi, edid);
     ScreenPreview preview(screen);
