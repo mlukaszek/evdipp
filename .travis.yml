@@ -16,7 +16,7 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libev-dev libboost-filesystem1.55-dev qtbase5-dev
   - mkdir build && cd build
-  - cmake -DCMAKE_CXX_COMPILER=clang++-3.8 -DCMAKE_CXX_FLAGS="-std=c++14" ..
+  - cmake -DCMAKE_CXX_COMPILER=clang++-3.8 -DCMAKE_CXX_FLAGS="-std=c++14" -DCMAKE_INSTALL_PREFIX=$HOME ..
   - make
 
 install:
