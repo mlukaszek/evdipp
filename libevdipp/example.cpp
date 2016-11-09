@@ -5,6 +5,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/range/iterator_range.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
 #include "evdi.hpp"
@@ -20,7 +21,7 @@ int first_available_device()
 
     const path dri("/dev/dri");
     if (is_directory(dri)) {
-        for (auto& entry : directory_iterator(dri))
+        for (auto& entry : make_iterator_range(directory_iterator(dri), {}))
         {
             const std::string name = entry.path().filename().string();
             if (starts_with(name, "card")) {
