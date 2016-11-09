@@ -32,7 +32,4 @@ before_install:
 script:
   - mkdir build && cd build
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DCMAKE_CXX_FLAGS="-std=c++14" -DCMAKE_INSTALL_PREFIX=$HOME ..
-  - make
-
-install:
   - make install
