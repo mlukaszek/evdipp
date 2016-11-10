@@ -1,24 +1,25 @@
 sudo: required
 language: cpp
 
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    - boost-latest
-    - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
-
 matrix:
   include:
     - compiler: gcc
       addons:
         apt:
+          sources:
+          - ubuntu-toolchain-r-test
+          - boost-latest
+          - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
           packages:
           - g++-5
       env: CC=gcc-5 CXX=g++-5
     - compiler: gcc
       addons:
         apt:
+          sources:
+          - ubuntu-toolchain-r-test
+          - boost-latest
+          - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
           packages:
           - g++-6
       env: CC=gcc-6 CXX=g++-6
@@ -26,6 +27,9 @@ matrix:
       addons:
         apt:
           sources:
+          - ubuntu-toolchain-r-test
+          - boost-latest
+          - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
           - llvm-toolchain-precise-3.8
           packages:
           - clang-3.8
