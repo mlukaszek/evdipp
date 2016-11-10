@@ -1,29 +1,35 @@
 sudo: required
 language: cpp
 
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    - boost-latest
+    - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
+
 matrix:
   include:
     - compiler: gcc
       addons:
         apt:
-          sources:
-          - ubuntu-toolchain-r-test
-          - boost-latest
-          - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
           packages:
           - g++-5
-      env: COMPILER=g++-5
+      env: CC=gcc-5 CXX=g++-5
+    - compiler: gcc
+      addons:
+        apt:
+          packages:
+          - g++-6
+      env: CC=gcc-6 CXX=g++-6
     - compiler: clang
       addons:
         apt:
           sources:
-          - ubuntu-toolchain-r-test
           - llvm-toolchain-precise-3.8
-          - boost-latest
-          - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
           packages:
           - clang-3.8
-      env: COMPILER=clang++-3.8
+      env: CC=clang-3.8 CXX=clang++-3.8
 
 before_install:
   - sudo apt-get -qq update
@@ -31,5 +37,5 @@ before_install:
 
 script:
   - mkdir build && cd build
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER -DCMAKE_CXX_FLAGS="-std=c++14" -DCMAKE_INSTALL_PREFIX=$HOME ..
+  - cmake -DCMAKE_CXX_FLAGS="-std=c++14" -DCMAKE_INSTALL_PREFIX=$HOME ..
   - make install
