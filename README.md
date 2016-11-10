@@ -1,4 +1,6 @@
 # evdipp
+[![Build Status](https://travis-ci.org/mlukaszek/evdipp.svg?branch=master)](https://travis-ci.org/mlukaszek/evdipp)
+
 Simple C++ wrapper for [DisplayLink evdi](https://github.com/DisplayLink/evdi) library, with some example client code.
 Currently undocumented, but hopefully simple enough to be useful even as-is.
 
