@@ -18,6 +18,11 @@ You need cmake to build. EVDI is defined as external project which will be clone
 
 To build the example terminal app, you need libev/libev++ and Boost.
 To build the Qt example, you obviously need Qt 5 dev packages installed.
+If you're using recent Ubuntu, you can do it by executing
+
+    sudo apt-get install -y libboost-filesystem-dev libev-dev qtbase5-dev
+
+Then, you can build it by pretty standard chain of commands:
 
     mkdir build
     cd build
