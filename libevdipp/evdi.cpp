@@ -8,7 +8,7 @@ Evdi::Evdi()
 Evdi::Evdi(int devnum)
 : handle(evdi_open(devnum))
 {
-    
+
 }
 
 Evdi::~Evdi()
@@ -33,7 +33,7 @@ void Evdi::handle_events(evdi_event_context *context) const
 
 void Evdi::connect(const unsigned char* edid, const unsigned edid_length) const
 {
-    evdi_connect(handle, edid, edid_length);
+    evdi_connect(handle, edid, edid_length, nullptr, 0);
 }
 
 void Evdi::disconnect() const

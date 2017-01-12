@@ -6,9 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(ExternalProject)
 ExternalProject_Add(github_evdi
- # GIT_REPOSITORY https://github.com/DisplayLink/evdi.git
- # Temporarily use my fork
- GIT_REPOSITORY https://github.com/mlukaszek/evdi.git
+ GIT_REPOSITORY https://github.com/DisplayLink/evdi.git
  GIT_TAG devel
  BUILD_IN_SOURCE 1
  CONFIGURE_COMMAND ""
