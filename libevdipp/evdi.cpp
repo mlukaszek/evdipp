@@ -1,4 +1,6 @@
 #include <cstddef>
+#include <cstdint>
+#include <limits>
 #include "evdi.hpp"
 
 Evdi::Evdi()
@@ -33,7 +35,7 @@ void Evdi::handle_events(evdi_event_context *context) const
 
 void Evdi::connect(const unsigned char* edid, const unsigned edid_length) const
 {
-    evdi_connect(handle, edid, edid_length, nullptr, 0);
+    evdi_connect(handle, edid, edid_length, std::numeric_limits<uint32_t>::max());
 }
 
 void Evdi::disconnect() const
