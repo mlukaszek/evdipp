@@ -7,8 +7,6 @@ matrix:
         apt:
           sources:
           - ubuntu-toolchain-r-test
-          - boost-latest
-          - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
           packages:
           - g++-5
       env: CC=gcc-5 CXX=g++-5
@@ -16,8 +14,6 @@ matrix:
         apt:
           sources:
           - ubuntu-toolchain-r-test
-          - boost-latest
-          - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
           packages:
           - g++-6
       env: CC=gcc-6 CXX=g++-6
@@ -25,16 +21,34 @@ matrix:
         apt:
           sources:
           - ubuntu-toolchain-r-test
-          - boost-latest
-          - sourceline: 'ppa:canonical-qt5-edgers/ubuntu1204-qt5'
-          - llvm-toolchain-precise-3.8
           packages:
-          - clang-3.8
-      env: CC=clang-3.8 CXX=clang++-3.8
+          - g++-7
+      env: CC=gcc-7 CXX=g++-7
+    - addons:
+        apt:
+          sources:
+          - llvm-toolchain-trusty-3.9
+          packages:
+          - clang-3.9
+      env: CC=clang-3.9 CXX=clang++-3.9
+    - addons:
+        apt:
+          sources:
+          - llvm-toolchain-trusty-4.0
+          packages:
+          - clang-4.0
+      env: CC=clang-4.0 CXX=clang++-4.0
+    - addons:
+        apt:
+          sources:
+          - llvm-toolchain-trusty-5.0
+          packages:
+          - clang-5.0
+      env: CC=clang-5.0 CXX=clang++-5.0
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y libev-dev libboost-filesystem1.55-dev qtbase5-dev
+  - sudo apt-get install -y libev-dev libboost-filesystem1.55-dev libboost-system1.55-dev libboost1.55-dev qtbase5-dev
 
 script:
   - mkdir build && cd build
