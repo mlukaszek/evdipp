@@ -50,5 +50,7 @@ void ScreenPreview::redraw()
 
 void ScreenPreview::screenshot()
 {
-	if (!label->pixmap()->isNull()) label->pixmap()->save("screenshot.png");
+	if (label->pixmap() && !label->pixmap()->isNull()) {
+		label->pixmap()->save("screenshot.png");
+	}
 }
