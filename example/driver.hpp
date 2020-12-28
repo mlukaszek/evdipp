@@ -1,4 +1,4 @@
-#include "screen.hpp"
+#include "libevdipp/screen.hpp"
 #include <ev++.h>
 #include <vector>
 
@@ -18,7 +18,7 @@ private:
 
     ev::io stdin_watcher;
     ev::periodic sync_timer;
-    
+
     std::vector<std::shared_ptr<ev::io>> screen_event_watchers;
     std::vector<ScreenPtr> screens;
 };

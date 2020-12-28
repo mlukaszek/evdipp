@@ -28,6 +28,5 @@ add_dependencies(libevdi github_evdi)
 include_directories(${LIBEVDI_DIR})
 add_subdirectory(libevdipp)
 
-include_directories(.)
+add_subdirectory(example)
 add_subdirectory(monitorsim)
-

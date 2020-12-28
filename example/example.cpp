@@ -8,8 +8,8 @@
 #include <boost/range/iterator_range.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
-#include "evdi.hpp"
-#include "screen.hpp"
+#include "libevdipp/evdi.hpp"
+#include "libevdipp/screen.hpp"
 #include "driver.hpp"
 
 namespace {
