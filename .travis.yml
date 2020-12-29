@@ -1,50 +1,58 @@
 sudo: required
 language: generic
+dist: focal
 
 matrix:
   include:
     - addons:
         apt:
-          sources:
-          - ubuntu-toolchain-r-test
           packages:
-          - g++-5
-      env: CC=gcc-5 CXX=g++-5
+          - clang-10
+      env: CC=clang-10 CXX=clang++-10
     - addons:
         apt:
-          sources:
-          - ubuntu-toolchain-r-test
           packages:
-          - g++-6
-      env: CC=gcc-6 CXX=g++-6
+          - clang-9
+      env: CC=clang-9 CXX=clang++-9
     - addons:
         apt:
-          sources:
-          - ubuntu-toolchain-r-test
           packages:
+          - clang-8
+      env: CC=clang-8 CXX=clang++-8
+    - addons:
+        apt:
+          packages:
+          - clang-7
+      env: CC=clang-7 CXX=clang++-7
+    - addons:
+        apt:
+          packages:
+          - clang-6.0
+      env: CC=clang-6.0 CXX-clang++-6.0
+    - addons:
+        apt:
+          packages:
+          - gcc-10
+          - g++-10
+      env: CC=gcc-10 CXX=g++-10
+    - addons:
+        apt:
+          packages:
+          - gcc-9
+          - g++-10
+      env: CC=gcc-9 CXX=g++-9
+    - addons:
+        apt:
+          packages:
+          - gcc-8
+          - g++-8
+      env: CC=gcc-8 CXX=g++-8
+    - addons:
+        apt:
+          packages:
+          - gcc-7
           - g++-7
       env: CC=gcc-7 CXX=g++-7
-    - addons:
-        apt:
-          sources:
-          - llvm-toolchain-trusty-3.9
-          packages:
-          - clang-3.9
-      env: CC=clang-3.9 CXX=clang++-3.9
-    - addons:
-        apt:
-          sources:
-          - llvm-toolchain-trusty-4.0
-          packages:
-          - clang-4.0
-      env: CC=clang-4.0 CXX=clang++-4.0
-    - addons:
-        apt:
-          sources:
-          - llvm-toolchain-trusty-5.0
-          packages:
-          - clang-5.0
-      env: CC=clang-5.0 CXX=clang++-5.0
 
 before_install:
   - sudo apt-get -qq update
