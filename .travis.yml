@@ -48,7 +48,7 @@ matrix:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y libev-dev libboost-filesystem1.55-dev libboost-system1.55-dev libboost1.55-dev qtbase5-dev
+  - sudo apt-get install -y libev-dev libboost-dev qtbase5-dev
 
 script:
   - mkdir build && cd build
