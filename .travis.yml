@@ -28,7 +28,7 @@ matrix:
         apt:
           packages:
           - clang-6.0
-      env: CC=clang-6.0 CXX-clang++-6.0
+      env: CC=clang-6.0 CXX=clang++-6.0
     - addons:
         apt:
           packages:
