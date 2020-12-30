@@ -1,5 +1,4 @@
 #include "screen.hpp"
-#include <boost/range/adaptor/map.hpp>
 #include "debug.hpp"
 
 Screen::Screen(const Evdi& evdi, std::vector<unsigned char>& edid)
@@ -57,7 +56,7 @@ void Screen::on_mode_change(evdi_mode mode)
     << mode.bits_per_pixel << "bpp fmt:" <<  mode.pixel_format << std::endl;
 
     buffersRegistered = false;
-    for (const auto& buffer_id : buffers | boost::adaptors::map_keys) {
+    for (const auto& [buffer_id, buffer] : buffers) {
         evdi.unregister_buffer(buffer_id);
     }
     
