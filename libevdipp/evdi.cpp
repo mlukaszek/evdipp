@@ -6,6 +6,8 @@
 #include <iostream>
 #include "evdi.hpp"
 
+Evdi::LogHandler Evdi::log_handler = [](const std::string&) {};
+
 Evdi::Evdi()
 {
     evdi_set_logging({ .function = &Evdi::dispatch_log, .user_data = this });
@@ -69,11 +71,6 @@ void Evdi::grab_pixels(evdi_rect* rects, int* num_rects) const
     evdi_grab_pixels(handle, rects, num_rects);
 }
 
-void Evdi::log(const std::string& message)
-{
-    std::cout << "evdipp: " << message << std::endl;
-}
-
 void Evdi::dispatch_log(void* user_data, const char* fmt, ...)
 {
     constexpr size_t MAX_LEN = 255;
@@ -84,5 +81,5 @@ void Evdi::dispatch_log(void* user_data, const char* fmt, ...)
     std::vsnprintf(buffer.data(), MAX_LEN, fmt, args);
     va_end(args);
 
-    static_cast<Evdi*>(user_data)->log(std::string(buffer.data()));
+    log_handler(std::string(buffer.data()));
 }
