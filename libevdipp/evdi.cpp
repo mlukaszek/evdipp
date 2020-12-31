@@ -35,6 +35,11 @@ void Evdi::handle_events(evdi_event_context* context) const
     evdi_handle_events(handle, context);
 }
 
+void Evdi::enable_cursor_events() const
+{
+    evdi_enable_cursor_events(handle);
+}
+
 void Evdi::connect(const unsigned char* edid,
     const unsigned edid_length) const
 {
