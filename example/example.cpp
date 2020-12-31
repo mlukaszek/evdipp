@@ -44,6 +44,10 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    Evdi::log_handler = [](const std::string& message) {
+        std::cout << "example: " << message << std::endl;
+    };
+
     Evdi evdi;
     if (!evdi) {
         std::cerr << "No usable EVDI found" << std::endl;
