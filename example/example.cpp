@@ -40,8 +40,7 @@ int main(int argc, char* argv[])
             return 1;
         }
     } else {
-        std::cerr << "Usage: " << argv[0] << " <sample.edid>" << std::endl;
-        return 1;
+        std::cerr << "Warning: no argument passed, using built-in sample EDID" << std::endl;
     }
 
     Evdi::log_handler = [](const std::string& message) {

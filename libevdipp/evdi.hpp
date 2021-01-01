@@ -33,6 +33,8 @@ public:
 
 private:
     evdi_handle handle;
+    static unsigned char sample_edid[];
+
     void log(const std::string& message);
     static void dispatch_log(void* user_data, const char* fmt, ...);
 };

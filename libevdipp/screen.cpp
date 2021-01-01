@@ -7,7 +7,12 @@ Screen::Screen(const Evdi& evdi, std::vector<unsigned char>& edid, bool separate
     , bufferToUpdate(0)
 {
     rects.resize(16); // FIXME: remove magic const
-    evdi.connect(edid.data(), edid.size());
+    if (edid.size() > 0) {
+        evdi.connect(edid.data(), edid.size());
+    } else {
+        evdi.connect(nullptr, 0);
+    }
+
     context.dpms_handler = dpms_handler;
     context.mode_changed_handler = mode_change_handler;
     context.update_ready_handler = update_ready_handler;
