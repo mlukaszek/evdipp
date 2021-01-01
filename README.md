@@ -34,6 +34,8 @@ Then, you can build it by pretty standard chain of commands:
     make install
 
 ## Running
+This project assumes you are familiar with what [evdi](https://github.com/DisplayLink/evdi) is, and how to build it for your system. Before attempting to launch any of the samples, make sure `evdi` kernel module is loaded. If you don't see it in the output of `lsmod`, run `modprobe evdi` first.
+
 Any client app for EVDI at the moment must be run by root to be able to function - so, using `sudo` is required. For example, to run the `monitorsim` binary built in the `stage/bin` subdirectory of your `build` folder, use:
 
     cd stage/bin
@@ -41,7 +43,7 @@ Any client app for EVDI at the moment must be run by root to be able to function
 
 Note that both the `example` app, and the Qt `monitorsim` client expect an input file with an EDID of a monitor that they should connect to evdi (which acts like a virtual graphics adapter that you need to connect to it). They will still run without it, but will use a hard-coded, single mode (800x600) EDID, which will reduce your possibilities - for example, you will not be able to change display modes for the virtual screen as it will only have one mode available.
 
-You can get an EDID from any monitor you have (see `/sys/class/drm/*/edid`), or source it from the net - for example from
+You can get an EDID from any monitor you have (see `ls -la /sys/class/drm/*/edid`), or source it from the net - for example from
 [Google's autotest project](https://chromium.googlesource.com/chromiumos/third_party/autotest/+/master/server/site_tests/display_Resolution/test_data/edids).
 Note however that the EDIDs you use must be valid - and many are not. EVDI refuses EDIDs with invalid checksums, connection attempts will fail with `Invalid argument` error reported by the libevdi library.
 
