@@ -1,56 +1,81 @@
-#include <QBoxLayout>
-#include <QtDebug>
+#include <QVBoxLayout>
+#include <QPainter>
+#include <QDateTime>
 #include "screenpreview.h"
 
-ScreenPreview::ScreenPreview(QEvdiScreen& screen, QWidget *parent)
-: QWidget(parent)
-, latestBufferId(-1)
-, screen(screen)
+ScreenPreview::ScreenPreview(QEvdiScreen& screen, QWidget* parent)
+    : QWidget(parent)
+    , cursorEnabled(false)
+    , cursorPosition()
+    , cursorHotpoint()
+    , latestBufferId(-1)
+    , screen(screen)
 {
-	label = new QLabel(this);
-	label->setScaledContents(true);
-	
-	QBoxLayout *layout = new QBoxLayout(QBoxLayout::TopToBottom);
-	layout->addWidget(label);
-	layout->setSizeConstraint(QLayout::SetMinimumSize);
-	setLayout(layout);
-
-	connect(&screen, SIGNAL(screen_updated(int)), this, SLOT(latest_buffer(int)));
-	
-	createTimers(60, 10);
+    connect(&screen, SIGNAL(screen_updated(int)), this, SLOT(latest_buffer(int)));
+    connect(&screen, SIGNAL(cursor_changed(QImage, bool, int, int)), this, SLOT(update_cursor(QImage, bool, int, int)));
+    connect(&screen, SIGNAL(cursor_moved(int, int)), this, SLOT(move_cursor(int, int)));
+    createTimer(60);
 }
 
-void ScreenPreview::createTimers(unsigned fps, unsigned screenshotEverySec)
+void ScreenPreview::createTimer(unsigned fps)
 {
-    redrawTimer = new QTimer(this);
-    connect(redrawTimer, SIGNAL(timeout()), this, SLOT(redraw()));
-    redrawTimer->start(1000.0 / fps);
-	
-	if (screenshotEverySec) {
-		screenshotTimer = new QTimer(this);
-		connect(screenshotTimer, SIGNAL(timeout()), this, SLOT(screenshot()));
-		screenshotTimer->start(1000 * screenshotEverySec);
-	}
+    updateTimer = new QTimer(this);
+    connect(updateTimer, SIGNAL(timeout()), this, SLOT(update_screen()));
+    updateTimer->start(1000.0 / fps);
 }
 
 void ScreenPreview::latest_buffer(int buffer_id)
 {
-	latestBufferId = buffer_id;
+    latestBufferId = buffer_id;
 }
 
-void ScreenPreview::redraw()
+void ScreenPreview::update_cursor(QImage cursor_image, bool enabled, int hot_x, int hot_y)
 {
-	screen.update();	
-	if (latestBufferId >= 0) {
-		// TODO: be smarter and only refresh areas of the image that changed
-		label->setPixmap(QPixmap::fromImage(screen.image_for_buffer(latestBufferId)));
-		label->update();
-	}
+    cursorEnabled = enabled;
+    if (cursorEnabled) {
+        cursorImage = cursor_image;
+        cursorHotpoint = QPoint(hot_x, hot_y);
+    }
 }
 
-void ScreenPreview::screenshot()
+void ScreenPreview::move_cursor(int x, int y)
 {
-	if (label->pixmap() && !label->pixmap()->isNull()) {
-		label->pixmap()->save("screenshot.png");
-	}
+    cursorPosition = QPoint(x, y);
+}
+
+void ScreenPreview::update_screen()
+{
+    screen.update();
+}
+
+void ScreenPreview::paintEvent(QPaintEvent*)
+{
+    QPainter painter(this);
+    if (latestBufferId >= 0) {
+        painter.drawImage(QPoint(0, 0), screen.image_for_buffer(latestBufferId));
+    }
+    if (cursorEnabled) {
+        painter.drawImage(cursorPosition - cursorHotpoint, cursorImage);
+    }
+    update();
+}
+
+QSize ScreenPreview::sizeHint() const
+{
+    return latestBufferId >= 0 ? screen.image_for_buffer(latestBufferId).size() : minimumSizeHint();
+}
+
+QSize ScreenPreview::minimumSizeHint() const
+{
+    return QSize(800, 600);
+}
+
+void ScreenPreview::save_screenshot()
+{
+    QImage image = screen.image_for_buffer(latestBufferId);
+    QPainter painter(&image);
+    if (cursorEnabled) {
+        painter.drawImage(cursorPosition - cursorHotpoint, cursorImage);
+    }
+    image.save(QString("screenshot ") + QDateTime::currentDateTimeUtc().toString(Qt::RFC2822Date) + ".png");
 }

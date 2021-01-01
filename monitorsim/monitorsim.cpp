@@ -1,7 +1,12 @@
 #include <QApplication>
+#include <QPushButton>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QGridLayout>
 #include <fstream>
 #include <iostream>
 
+#include <libevdipp/evdi.hpp>
 #include "screenpreview.h"
 
 namespace {
@@ -37,9 +42,15 @@ int main(int argc, char* argv[])
             return 1;
         }
     } else {
-        std::cerr << "Usage: " << argv[0] << " <sample.edid>" << std::endl;
-        return 2;
+        std::cerr << "Warning: no argument passed, using built-in sample EDID" << std::endl;
     }
+
+    QApplication app(argc, argv);
+
+    auto log = new QListWidget;
+    Evdi::log_handler = [&log](const std::string& message) {
+        new QListWidgetItem(QString::fromStdString(message), log);
+    };
 
     Evdi evdi;
     if (!evdi) {
@@ -47,10 +58,19 @@ int main(int argc, char* argv[])
         return 3;
     }
 
-    QApplication app(argc, argv);
-    QEvdiScreen screen(evdi, edid);
-    ScreenPreview preview(screen);
-    preview.show();
+    auto window = new QWidget;
 
+    QEvdiScreen screen(evdi, edid);
+    auto preview = new ScreenPreview(screen);
+
+    auto grid = new QGridLayout(window);
+    auto button = new QPushButton("Save screenshot");
+    grid->addWidget(button, 0, 0);
+    grid->addWidget(log, 0, 1);
+    grid->addWidget(preview, 1, 0, 1, 2);
+    window->setLayout(grid);
+    window->connect(button, SIGNAL(clicked()), preview, SLOT(save_screenshot()));
+
+    window->show();
     return app.exec();
 }

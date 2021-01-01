@@ -9,27 +9,36 @@
 #include "qevdiscreen.h"
 
 class ScreenPreview
-: public QWidget
-{
+    : public QWidget {
     Q_OBJECT;
 
 public:
-    ScreenPreview(QEvdiScreen& screen, QWidget *parent = 0);
+    ScreenPreview(QEvdiScreen& screen, QWidget* parent = 0);
+    void paintEvent(QPaintEvent*);
+    QSize sizeHint() const;
+    QSize minimumSizeHint() const;
+
+public slots:
+    void save_screenshot();
 
 private slots:
     void latest_buffer(int buffer_id);
-	void redraw();
-	void screenshot();
+    void update_screen();
+    void update_cursor(QImage cursorImage, bool enabled, int hot_x, int hot_y);
+    void move_cursor(int x, int y);
 
 private:
-	void createTimers(unsigned fps, unsigned screenshotEverySec = 0);
-	
-    QTimer *redrawTimer;
-	QTimer *screenshotTimer;
+    void createTimer(unsigned fps);
 
-	QLabel *label;
-	int latestBufferId;
-	QEvdiScreen& screen;
+    QTimer* updateTimer;
+
+    QImage cursorImage;
+    bool cursorEnabled;
+    QPoint cursorPosition;
+    QPoint cursorHotpoint;
+
+    int latestBufferId;
+    QEvdiScreen& screen;
 };
 
 #endif
