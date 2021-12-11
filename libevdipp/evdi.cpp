@@ -51,9 +51,9 @@ void Evdi::handle_events(evdi_event_context* context) const
     evdi_handle_events(handle, context);
 }
 
-void Evdi::enable_cursor_events() const
+void Evdi::enable_cursor_events(bool enable) const
 {
-    evdi_enable_cursor_events(handle);
+    evdi_enable_cursor_events(handle, enable);
 }
 
 void Evdi::connect(const unsigned char* edid,

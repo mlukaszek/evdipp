@@ -27,7 +27,7 @@ public:
 
     int get_event_source() const;
     void handle_events(evdi_event_context* context) const;
-    void enable_cursor_events() const;
+    void enable_cursor_events(bool enable = true) const;
 
     static void add() { evdi_add_device(); }
 
