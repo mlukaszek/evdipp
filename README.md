@@ -29,7 +29,7 @@ Then, you can build it by pretty standard chain of commands:
 
     mkdir -p build/stage
     cd build
-    cmake -DCMAKE_INSTALL_PREFIX=stage -DCMAKE_INSTALL_RPATH=$(pwd)/stage/lib ..
+    cmake -DCMAKE_INSTALL_PREFIX=stage -DCMAKE_INSTALL_RPATH="$(pwd)/stage/lib" ..
     make install
 
 ## Running
