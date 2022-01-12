@@ -1,9 +1,9 @@
-set(libevdpp_SOURCES
+set(libevdipp_SOURCES
   buffer.cpp
   evdi.cpp
   screen.cpp
 )
-add_library(evdipp STATIC ${libevdpp_SOURCES})
+add_library(evdipp STATIC ${libevdipp_SOURCES})
 
 install(TARGETS evdipp
   ARCHIVE DESTINATION lib
