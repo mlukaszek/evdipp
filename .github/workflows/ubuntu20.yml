@@ -1,0 +1,22 @@
+name: Ubuntu 20.04 CI
+
+on: [push, pull_request]
+
+jobs:
+  ubuntu-build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install packages
+        run: sudo apt-get install -y libev-dev qtbase5-dev libdrm-dev cmake
+      - uses: actions/checkout@v2
+      - name: Setup cmake
+        uses: jwlawson/actions-setup-cmake@v1.9
+        with:
+          cmake-version: '3.16.x'
+      - name: Build and run
+        run: |
+          mkdir -p build/stage
+          cd build
+          cmake -DCMAKE_INSTALL_PREFIX=stage -DCMAKE_INSTALL_RPATH="$(pwd)/stage/lib" ..
+          make install
+          ./stage/bin/example
