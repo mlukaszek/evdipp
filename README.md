@@ -27,10 +27,9 @@ If you're using recent Ubuntu, you can do it by executing
 
 Then, you can build it by pretty standard chain of commands:
 
-    mkdir build
+    mkdir -p build/stage
     cd build
-    mkdir stage
-    cmake -DCMAKE_INSTALL_PREFIX=stage -DCMAKE_INSTALL_RPATH=stage/lib ..
+    cmake -DCMAKE_INSTALL_PREFIX=stage -DCMAKE_INSTALL_RPATH=$(pwd)/stage/lib ..
     make install
 
 ## Running
