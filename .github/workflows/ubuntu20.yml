@@ -19,4 +19,4 @@ jobs:
           cd build
           cmake -DCMAKE_INSTALL_PREFIX=stage -DCMAKE_INSTALL_RPATH="$(pwd)/stage/lib" ..
           make install
-          ./stage/bin/example
+          ./stage/bin/example || true
