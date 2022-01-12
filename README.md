@@ -1,5 +1,5 @@
 # evdipp
-[![Build Status](https://travis-ci.org/mlukaszek/evdipp.svg?branch=master)](https://travis-ci.org/mlukaszek/evdipp)
+![Ubuntu](https://github.com/mlukaszek/evdipp/actions/workflows/ubuntu20.yml/badge.svg)
 
 Simple C++ wrapper for [DisplayLink evdi](https://github.com/DisplayLink/evdi) library, with some example client code.
 Currently undocumented, but hopefully simple enough to be useful even as-is.
