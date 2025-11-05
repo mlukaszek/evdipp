@@ -25,7 +25,12 @@ unsigned char Evdi::sample_edid[] = {
 Evdi::Evdi()
 {
     evdi_set_logging({ .function = &Evdi::dispatch_log, .user_data = this });
-    handle = evdi_open_attached_to(NULL);
+    for(int i = 0; i < 20; ++i) {
+        if (evdi_check_device(i) == AVAILABLE) {
+            handle = evdi_open(i);
+            break;
+        }
+    }
 }
 
 Evdi::Evdi(int devnum)
